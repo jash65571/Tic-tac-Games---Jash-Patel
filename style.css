@@ -153,3 +153,57 @@ table {
 .win-color {
 	background-color: rgb(240, 240, 240);
 }
+
+
+/* Add your existing CSS styles here */
+
+/* Your existing CSS styles */
+
+/* Fireworks animation */
+@keyframes fireworks {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+#fireworks {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	z-index: 1000;
+	pointer-events: none;
+}
+
+.firework {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background: red;
+	border-radius: 50%;
+	opacity: 0;
+	animation: fireworks 1s linear infinite;
+}
+
+	.firework:nth-child(2) {
+		background: green;
+		animation-delay: 0.2s;
+	}
+
+	.firework:nth-child(3) {
+		background: blue;
+		animation-delay: 0.4s;
+	}
+
+/* Your existing CSS styles */
+
