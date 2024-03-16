@@ -1,42 +1,6 @@
 "use strict";
 
-/*
 
-A SIMPLE TIC-TAC-TOE GAME IN JAVASCRIPT
-
-(1) Grid layout
-
-The game grid is represented in the array Grid.cells as follows:
-
-[0] [1] [2]
-[3] [4] [5]
-[6] [7] [8]
-
-The cells (array elements) hold the following numeric values:
-0 if not occupied, 1 for player, 3 for computer.
-This allows us to quickly get an overview of the game state:
-if the sum of all the cells in a row is 9, the computer wins,
-if it is 3 and all the cells are occupied, the human player wins,
-etc.
-
-(2) Strategy of makeComputerMove()
-
-The computer first  looks for almost completed rows, columns, and
-diagonals, where there are two fields occupied either by the human
-player or by the computer itself. If the computer can win by
-completing a sequence, it does so; if it can block the player from
-winning with the next move, it does that. If none of that applies,
-it plays the center field if that's free, otherwise it selects a
-random free field. This is not a 100 % certain strategy, but the
-gameplay experience is fairly decent.
-
-*/
-
-//==================================
-// EVENT BINDINGS
-//==================================
-
-// Bind Esc key to closing the modal dialog
 document.onkeypress = function (evt) {
     evt = evt || window.event;
     var modal = document.getElementsByClassName("modal")[0];
@@ -122,13 +86,7 @@ function Grid() {
     this.cells = new Array(9);
 }
 
-// Grid methods
-//=============
-
-// Get free cells in an array.
-// Returns an array of indices in the original Grid.cells array, not the values
-// of the array elements.
-// Their values can be accessed as Grid.cells[index].
+\
 Grid.prototype.getFreeCellIndices = function () {
     var i = 0,
         resultArray = [];
@@ -137,13 +95,11 @@ Grid.prototype.getFreeCellIndices = function () {
             resultArray.push(i);
         }
     }
-    // console.log("resultArray: " + resultArray.toString());
-    // debugger;
+
     return resultArray;
 };
 
-// Get a row (accepts 0, 1, or 2 as argument).
-// Returns the values of the elements.
+
 Grid.prototype.getRowValues = function (index) {
     if (index !== 0 && index !== 1 && index !== 2) {
         console.error("Wrong arg for getRowValues!");
@@ -633,6 +589,75 @@ function closeModal(id) {
 function endGame(who) {
     if (who == player) {
         announceWinner("Congratulations, you won!");
+    } else if (who == computer) {
+        announceWinner("Computer wins!");
+    } else {
+        announceWinner("It's a tie!");
+    }
+    gameOver = true;
+    whoseTurn = 0;
+    moves = 0;
+    winner = 0;
+    document.getElementById("computer_score").innerHTML = score.computer;
+    document.getElementById("tie_score").innerHTML = score.ties;
+    document.getElementById("player_score").innerHTML = score.player;
+    for (var i = 0; i <= 8; i++) {
+        var id = "cell" + i.toString();
+        document.getElementById(id).style.cursor = "default";
+    }
+    setTimeout(restartGame, 800);
+}
+
+// Function to start the fireworks animation
+function startFireworks() {
+    // Your code to start the fireworks animation
+    // For example:
+    document.getElementById("fireworks").classList.add("fireworks-active");
+}
+
+// Function to stop the fireworks animation
+function stopFireworks() {
+    // Your code to stop the fireworks animation
+    // For example:
+    document.getElementById("fireworks").classList.remove("fireworks-active");
+}
+
+// Function to announce the winner and start/stop fireworks
+function announceWinner(text, isUserWinner) {
+    document.getElementById("winText").innerHTML = text;
+    document.getElementById("winAnnounce").style.display = "block";
+
+    if (isUserWinner) {
+        startFireworks(); // Start fireworks when the user wins
+    } else {
+        stopFireworks(); // Stop fireworks if the user didn't win
+    }
+}
+
+// Function to close the modal and stop the fireworks animation
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+    stopFireworks(); // Stop fireworks when the modal is closed
+}
+
+
+// Your existing JavaScript code
+
+function celebrate() {
+    var fireworksContainer = document.getElementById("fireworks");
+    for (var i = 0; i < 3; i++) {
+        var firework = document.createElement("div");
+        firework.classList.add("firework");
+        firework.style.top = Math.random() * 100 + "vh";
+        firework.style.left = Math.random() * 100 + "vw";
+        fireworksContainer.appendChild(firework);
+    }
+}
+
+function endGame(who) {
+    if (who == player) {
+        announceWinner("Congratulations, you won!");
+        celebrate(); // Call the celebrate function to start fireworks
     } else if (who == computer) {
         announceWinner("Computer wins!");
     } else {
