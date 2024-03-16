@@ -86,7 +86,13 @@ function Grid() {
     this.cells = new Array(9);
 }
 
-\
+// Grid methods
+//=============
+
+// Get free cells in an array.
+// Returns an array of indices in the original Grid.cells array, not the values
+// of the array elements.
+// Their values can be accessed as Grid.cells[index].
 Grid.prototype.getFreeCellIndices = function () {
     var i = 0,
         resultArray = [];
@@ -95,11 +101,13 @@ Grid.prototype.getFreeCellIndices = function () {
             resultArray.push(i);
         }
     }
-
+    // console.log("resultArray: " + resultArray.toString());
+    // debugger;
     return resultArray;
 };
 
-
+// Get a row (accepts 0, 1, or 2 as argument).
+// Returns the values of the elements.
 Grid.prototype.getRowValues = function (index) {
     if (index !== 0 && index !== 1 && index !== 2) {
         console.error("Wrong arg for getRowValues!");
